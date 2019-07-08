@@ -19,14 +19,33 @@ repositories {
 	mavenCentral()
 }
 
+tasks {
+	test {
+		useJUnitPlatform()
+		testLogging {
+			events("passed", "skipped", "failed")
+		}
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	//testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+	testImplementation 'org.assertj:assertj-core:3.11.1'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.2.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+	testImplementation 'org.mockito:mockito-junit-jupiter:2.28.2'
+	testImplementation 'org.junit.platform:junit-platform-runner:1.5.0'
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.0'
+	testImplementation 'org.mockito:mockito-core:2.28.2'
+
+
 }
