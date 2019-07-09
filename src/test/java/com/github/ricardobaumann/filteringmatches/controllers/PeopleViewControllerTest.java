@@ -77,10 +77,6 @@ class PeopleViewControllerTest {
                 new Range(10, 300)
         );
 
-        PersonFilter personFilter1 = objectMapper.readValue(objectMapper.writeValueAsString(personFilter), PersonFilter.class);
-
-        log.info(personFilter1.toString());
-
         when(personService.searchFor(personFilter))
                 .thenReturn(results);
 
