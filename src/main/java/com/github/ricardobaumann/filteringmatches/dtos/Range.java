@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityDto {
-    private String name;
-
-    private Double lat;
-
-    private Double lon;
+public class Range {
+    private Integer from;
+    private Integer to;
 }
