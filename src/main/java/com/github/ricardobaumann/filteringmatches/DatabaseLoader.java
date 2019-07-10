@@ -12,14 +12,14 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 @Log4j2
-@Component
+//@Component
 public class DatabaseLoader implements CommandLineRunner {
 
     private final Resource databaseSetupResource;
@@ -56,7 +56,7 @@ public class DatabaseLoader implements CommandLineRunner {
                         personDto.getAge(),
                         personDto.getJobTitle(),
                         personDto.getHeightInCm(),
-                        new City(personDto.getCity().getName(), new double[]{personDto.getCity().getLat(), personDto.getCity().getLon()}),
+                        new City(personDto.getCity().getName(), new GeoJsonPoint(personDto.getCity().getLon(), personDto.getCity().getLat())),
                         personDto.getMainPhoto(),
                         personDto.getCompatibilityScore(),
                         personDto.getContactsExchanged(),

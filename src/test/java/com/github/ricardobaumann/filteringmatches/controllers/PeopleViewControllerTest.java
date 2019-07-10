@@ -6,7 +6,6 @@ import com.github.ricardobaumann.filteringmatches.dtos.Range;
 import com.github.ricardobaumann.filteringmatches.models.City;
 import com.github.ricardobaumann.filteringmatches.models.Person;
 import com.github.ricardobaumann.filteringmatches.service.PersonService;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +14,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
@@ -25,10 +24,10 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Slf4j
 @ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
 class PeopleViewControllerTest {
@@ -58,7 +57,7 @@ class PeopleViewControllerTest {
                 18,
                 "job title",
                 183,
-                new City("city", new double[]{20, 20}),
+                new City("city", new GeoJsonPoint(20, 20)),
                 "photo",
                 22.3,
                 2,
@@ -70,19 +69,19 @@ class PeopleViewControllerTest {
         PersonFilter personFilter = new PersonFilter(
                 true,
                 true,
-                "fav",
-                20,
-                new Range(10, 40),
-                new Range(100, 190),
-                new Range(10, 300)
-        );
+                true,
+                22.3,
+                new Range(10, 20),
+                new Range(100, 200),
+                new Range(100, 500),
+                new double[]{-1.772232, 51.568535});
 
         when(personService.searchFor(personFilter))
                 .thenReturn(results);
 
 
         //When //Then
-        mockMvc.perform(MockMvcRequestBuilders.post("/people/report")
+        mockMvc.perform(post("/people/report")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personFilter)))
                 .andExpect(status().isOk())
@@ -90,8 +89,8 @@ class PeopleViewControllerTest {
                 .andExpect(jsonPath("$[0].age", is(person.getAge())))
                 .andExpect(jsonPath("$[0].job_title", is(person.getJobTitle())))
                 .andExpect(jsonPath("$[0].city.name", is(person.getCity().getName())))
-                .andExpect(jsonPath("$[0].city.lat", is(person.getCity().getPosition()[0])))
-                .andExpect(jsonPath("$[0].city.lon", is(person.getCity().getPosition()[1])))
+                .andExpect(jsonPath("$[0].city.lat", is(person.getCity().getPosition().getY())))
+                .andExpect(jsonPath("$[0].city.lon", is(person.getCity().getPosition().getY())))
                 .andExpect(jsonPath("$[0].main_photo", is(person.getMainPhoto())))
                 .andExpect(jsonPath("$[0].compatibility_score", is(person.getCompatibilityScore())))
                 .andExpect(jsonPath("$[0].contacts_exchanged", is(person.getContactsExchanged())))

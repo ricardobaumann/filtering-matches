@@ -13,14 +13,16 @@ public class PersonFilter {
 
     private Boolean inContact;
 
-    private String favorite;
+    private Boolean favorite;
 
-    private Integer compatibilityScore;
+    private Double compatibilityScore;
 
     private Range ageRange;
 
     private Range heightRange;
 
     private Range distanceInKm;
+
+    private double[] coordinates;
 
 }

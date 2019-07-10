@@ -35,7 +35,7 @@ public class PeopleViewController {
                 person.getAge(),
                 person.getJobTitle(),
                 person.getHeightInCm(),
-                new CityDto(person.getCity().getName(), person.getCity().getPosition()[0], person.getCity().getPosition()[1]),
+                new CityDto(person.getCity().getName(), person.getCity().getPosition().getX(), person.getCity().getPosition().getY()),
                 person.getMainPhoto(),
                 person.getCompatibilityScore(),
                 person.getContactsExchanged(),
