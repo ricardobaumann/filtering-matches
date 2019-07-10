@@ -5,13 +5,16 @@ import com.github.ricardobaumann.filteringmatches.dtos.PersonDto;
 import com.github.ricardobaumann.filteringmatches.dtos.PersonFilter;
 import com.github.ricardobaumann.filteringmatches.models.Person;
 import com.github.ricardobaumann.filteringmatches.service.PersonService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
 public class PeopleViewController {
 
@@ -22,7 +25,7 @@ public class PeopleViewController {
     }
 
     @PostMapping("/people/report")
-    public List<PersonDto> post(@RequestBody PersonFilter personFilter) {
+    public List<PersonDto> post(@Valid @RequestBody PersonFilter personFilter) {
         return personService.searchFor(personFilter)
                 .stream()
                 .map(this::toDto)

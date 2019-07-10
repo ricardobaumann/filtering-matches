@@ -13,13 +13,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 @Log4j2
-//@Component
+@Component
 public class DatabaseLoader implements CommandLineRunner {
 
     private final Resource databaseSetupResource;

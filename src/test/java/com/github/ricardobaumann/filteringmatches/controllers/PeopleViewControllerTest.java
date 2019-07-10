@@ -7,7 +7,9 @@ import com.github.ricardobaumann.filteringmatches.models.City;
 import com.github.ricardobaumann.filteringmatches.models.Person;
 import com.github.ricardobaumann.filteringmatches.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -21,6 +23,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
@@ -97,5 +101,53 @@ class PeopleViewControllerTest {
                 .andExpect(jsonPath("$[0].favorite", is(person.getFavorite())))
                 .andExpect(jsonPath("$[0].religion", is(person.getReligion())))
         ;
+    }
+
+    @TestFactory
+    public List<DynamicTest> shouldValidateInputField() {
+
+        return Stream.of(new PersonFilter(
+                        true,
+                        true,
+                        true,
+                        22.3,
+                        new Range(10, 20),
+                        new Range(100, 200),
+                        null,
+                        null),
+                new PersonFilter(
+                        true,
+                        true,
+                        true,
+                        22.3,
+                        new Range(10, 20),
+                        new Range(100, 200),
+                        null,
+                        new double[]{20, 20}),
+                new PersonFilter(
+                        true,
+                        true,
+                        true,
+                        22.3,
+                        new Range(10, 20),
+                        new Range(100, 200),
+                        new Range(20, 30),
+                        null),
+                new PersonFilter(
+                        true,
+                        true,
+                        true,
+                        22.3,
+                        new Range(10, 20),
+                        new Range(100, 200),
+                        new Range(20, null),
+                        null)
+        )
+                .map(personFilter -> DynamicTest.dynamicTest("Validate input", () -> {
+                    mockMvc.perform(post("/people/report")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(personFilter)))
+                            .andExpect(status().isBadRequest());
+                })).collect(Collectors.toList());
     }
 }
