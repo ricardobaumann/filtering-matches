@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Add User</title>
+    <title>Filter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -19,6 +19,19 @@
             <form action="#" th:action="@{/filter}" th:object="${personFilter}" method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
+
+                        <label for="hasPhoto" class="col-form-label">Has Photo</label>
+                        <input type="checkbox" th:field="*{hasPhoto}" class="form-control"
+                               id="hasPhoto">
+
+                        <label for="inContact" class="col-form-label">In Contact</label>
+                        <input type="checkbox" th:field="*{inContact}" class="form-control"
+                               id="inContact">
+
+                        <label for="favorite" class="col-form-label">Favorite</label>
+                        <input type="checkbox" th:field="*{favorite}" class="form-control"
+                               id="favorite">
+
                         <label for="compatibilityScore" class="col-form-label">Compatibility Score</label>
                         <input type="number" th:field="*{compatibilityScore}" class="form-control"
                                id="compatibilityScore" placeholder="Compatibility Score">
@@ -26,9 +39,62 @@
                         <span th:if="${#fields.hasErrors('compatibilityScore')}" th:errors="*{compatibilityScore}"
                               class="text-danger"></span>
 
-                        <label for="hasPhoto" class="col-form-label">Has Photo</label>
-                        <input type="checkbox" th:field="*{hasPhoto}" class="form-control"
-                               id="hasPhoto" placeholder="Has Photo">
+                        <label for="ageRangeFrom" class="col-form-label">Age Range From</label>
+                        <input type="number" th:field="*{ageRange.from}" class="form-control"
+                               id="ageRangeFrom">
+
+                        <span th:if="${#fields.hasErrors('ageRange.from')}" th:errors="*{ageRange.from}"
+                              class="text-danger"></span>
+
+                        <label for="ageRangeTo" class="col-form-label">Age Range To</label>
+                        <input type="number" th:field="*{ageRange.to}" class="form-control"
+                               id="ageRangeTo">
+
+                        <span th:if="${#fields.hasErrors('ageRange.to')}" th:errors="*{ageRange.to}"
+                              class="text-danger"></span>
+
+                        <label for="heightRangeFrom" class="col-form-label">Height Range From</label>
+                        <input type="number" th:field="*{heightRange.from}" class="form-control"
+                               id="heightRangeFrom">
+
+                        <span th:if="${#fields.hasErrors('heightRange.from')}" th:errors="*{heightRange.from}"
+                              class="text-danger"></span>
+
+                        <label for="heightRangeTo" class="col-form-label">Height Range To</label>
+                        <input type="number" th:field="*{heightRange.to}" class="form-control"
+                               id="heightRangeTo">
+
+                        <span th:if="${#fields.hasErrors('heightRange.to')}" th:errors="*{heightRange.to}"
+                              class="text-danger"></span>
+
+                        <label for="distanceInKmRangeFrom" class="col-form-label">Distance in Km Range From</label>
+                        <input type="number" th:field="*{distanceInKm.from}" class="form-control"
+                               id="distanceInKmRangeFrom">
+
+                        <span th:if="${#fields.hasErrors('distanceInKm.from')}" th:errors="*{distanceInKm.from}"
+                              class="text-danger"></span>
+
+                        <label for="distanceInKmRangeTo" class="col-form-label">Distance In Km Range To</label>
+                        <input type="number" th:field="*{distanceInKm.to}" class="form-control"
+                               id="distanceInKmRangeTo">
+
+                        <span th:if="${#fields.hasErrors('heightRange.to')}" th:errors="*{heightRange.to}"
+                              class="text-danger"></span>
+
+
+                        <label for="longitude" class="col-form-label">Longitude</label>
+                        <input type="number" th:field="*{longitude}" class="form-control"
+                               id="longitude">
+
+                        <span th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"
+                              class="text-danger"></span>
+
+                        <label for="latitude" class="col-form-label">Longitude</label>
+                        <input type="number" th:field="*{latitude}" class="form-control"
+                               id="latitude">
+
+                        <span th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"
+                              class="text-danger"></span>
 
                     </div>
 

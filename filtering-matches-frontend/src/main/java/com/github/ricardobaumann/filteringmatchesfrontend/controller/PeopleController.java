@@ -7,9 +7,11 @@ import com.github.ricardobaumann.filteringmatchesfrontend.dtos.Range;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 
 @Slf4j
@@ -23,16 +25,24 @@ public class PeopleController {
                 true,
                 true,
                 0.0,
-                new Range(0, 100),
-                new Range(0, 200),
-                new Range(0, 500),
-                new double[]{0.0, 0.0}
+                new Range(10, 100),
+                new Range(15, 200),
+                new Range(20, 500),
+                0.0,
+                0.0
         ));
         return "filter-form";
     }
 
     @PostMapping("/filter")
-    public String filter(Model model, PersonFilter personFilter) {
+    public String filter(@Valid PersonFilter personFilter,
+                         BindingResult bindingResult,
+                         Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("personFilter", personFilter);
+            return "filter-form";
+        }
 
         log.info("Filtering with {}", personFilter);
 

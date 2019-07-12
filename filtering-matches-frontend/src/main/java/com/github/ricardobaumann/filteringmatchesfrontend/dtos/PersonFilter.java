@@ -18,18 +18,24 @@ public class PersonFilter {
 
     private Boolean favorite;
 
+    @NotNull
     private Double compatibilityScore;
 
     @Valid
+    @NotNull
     private Range ageRange;
 
     @Valid
+    @NotNull
     private Range heightRange;
 
     @NotNull
     private Range distanceInKm;
 
     @NotNull
-    private double[] coordinates;
+    private Double longitude;
+
+    @NotNull
+    private Double latitude;
 
 }
