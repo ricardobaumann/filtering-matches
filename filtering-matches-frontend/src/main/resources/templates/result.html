@@ -21,14 +21,30 @@
                 <table class="table table-striped table-responsive-md">
                     <thead>
                     <tr>
-                        <th>Compatibility Score</th>
+                        <th>Display Name</th>
+                        <th>Age</th>
+                        <th>Job Title</th>
+                        <th>Height In Cm</th>
+                        <th>City</th>
                         <th>Main Photo</th>
+                        <th>Compatibility Score</th>
+                        <th>Contacts Exchanged</th>
+                        <th>Favorite</th>
+                        <th>Religion</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="person : ${people}">
-                        <td th:text="${person.compatibilityScore}"></td>
+                        <td th:text="${person.displayName}"></td>
+                        <td th:text="${person.age}"></td>
+                        <td th:text="${person.jobTitle}"></td>
+                        <td th:text="${person.heightInCm}"></td>
+                        <td th:text="${person.city.name}"></td>
                         <td th:text="${person.mainPhoto}"></td>
+                        <td th:text="${person.compatibilityScore}"></td>
+                        <td th:text="${person.contactsExchanged}"></td>
+                        <td th:text="${person.favorite}"></td>
+                        <td th:text="${person.religion}"></td>
                     </tr>
                     </tbody>
                 </table>

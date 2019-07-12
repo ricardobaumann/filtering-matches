@@ -12,10 +12,13 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class PersonFilter {
 
+    @NotNull
     private Boolean hasPhoto;
 
+    @NotNull
     private Boolean inContact;
 
+    @NotNull
     private Boolean favorite;
 
     @NotNull
