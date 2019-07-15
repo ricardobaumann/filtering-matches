@@ -31,7 +31,7 @@ public class Person {
 
     private Integer contactsExchanged;
 
-    private Boolean favorite;
+    private Boolean favourite;
 
     private String religion;
 }

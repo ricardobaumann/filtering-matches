@@ -4,7 +4,7 @@ import com.github.ricardobaumann.filteringmatches.dtos.PersonFilter;
 import com.github.ricardobaumann.filteringmatches.dtos.Range;
 import com.github.ricardobaumann.filteringmatches.models.City;
 import com.github.ricardobaumann.filteringmatches.models.Person;
-import com.github.ricardobaumann.filteringmatches.repos.PersonRepository;
+import com.github.ricardobaumann.filteringmatches.repos.PeopleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -22,26 +22,26 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
-class PersonServiceTest {
+class PeopleServiceTest {
 
     @Mock
-    private PersonRepository personRepository;
+    private PeopleRepository peopleRepository;
 
     @InjectMocks
-    private PersonService personService;
+    private PeopleService peopleService;
 
     @Test
     void shouldSavePerson() {
         //Given
         Person person = new Person();
-        when(personRepository.save(person))
+        when(peopleRepository.save(person))
                 .thenReturn(person);
 
         //When
-        personService.save(person);
+        peopleService.save(person);
 
         //Then
-        verify(personRepository).save(person);
+        verify(peopleRepository).save(person);
     }
 
     @Test
@@ -55,7 +55,7 @@ class PersonServiceTest {
                 new Range(10, 20),
                 new Range(100, 200),
                 new Range(100, 500),
-                new double[]{-1.772232, 51.568535});
+                -1.772232, 51.568535);
 
         Person person = new Person(
                 null,
@@ -72,11 +72,11 @@ class PersonServiceTest {
 
         );
 
-        when(personRepository.findBy(personFilter))
+        when(peopleRepository.findBy(personFilter))
                 .thenReturn(Collections.singletonList(person));
 
         //When
-        assertThat(personService.searchFor(personFilter))
+        assertThat(peopleService.searchFor(personFilter))
                 .containsExactly(person);
     }
 }

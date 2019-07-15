@@ -1,9 +1,8 @@
 package com.github.ricardobaumann.filteringmatchesfrontend.controller;
 
-import com.github.ricardobaumann.filteringmatchesfrontend.dtos.CityDto;
-import com.github.ricardobaumann.filteringmatchesfrontend.dtos.PersonDto;
 import com.github.ricardobaumann.filteringmatchesfrontend.dtos.PersonFilter;
 import com.github.ricardobaumann.filteringmatchesfrontend.dtos.Range;
+import com.github.ricardobaumann.filteringmatchesfrontend.services.PeopleReportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,25 +11,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 
 @Slf4j
 @Controller
 public class PeopleController {
 
+    private final PeopleReportService peopleReportService;
+
+    public PeopleController(PeopleReportService peopleReportService) {
+        this.peopleReportService = peopleReportService;
+    }
+
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("personFilter", new PersonFilter(
-                true,
-                true,
-                true,
-                0.0,
-                new Range(10, 100),
-                new Range(15, 200),
-                new Range(20, 500),
-                0.0,
-                0.0
-        ));
+        model.addAttribute("personFilter", defaultFormData());
         return "filter-form";
     }
 
@@ -46,34 +40,22 @@ public class PeopleController {
 
         log.info("Filtering with {}", personFilter);
 
-        model.addAttribute("people", Arrays.asList(
-                new PersonDto(
-                        "display name 1",
-                        18,
-                        "job title 1",
-                        183,
-                        new CityDto("mario city", 20.0, 12.0),
-                        "mainPhoto",
-                        12.2,
-                        2,
-                        true,
-                        "love"
-                ),
-                new PersonDto(
-                        "display name 2",
-                        30,
-                        "job title 2",
-                        200,
-                        new CityDto("gotham city", 23.0, 99.0),
-                        "mainPhoto 2",
-                        12.2,
-                        2,
-                        true,
-                        "peace"
-                )
-        ));
+        model.addAttribute("people", peopleReportService.filter(personFilter));
 
         return "result";
     }
 
+    private PersonFilter defaultFormData() {
+        return new PersonFilter(
+                true,
+                true,
+                true,
+                22.3,
+                new Range(10, 20),
+                new Range(100, 200),
+                new Range(100, 500),
+                -1.772232,
+                51.568535
+        );
+    }
 }

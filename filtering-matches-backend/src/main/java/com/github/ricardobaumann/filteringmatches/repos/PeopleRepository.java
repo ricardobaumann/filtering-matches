@@ -14,11 +14,11 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
-public class PersonRepository {
+public class PeopleRepository {
     private static final Double RADIUS = 6378.1;
     private final MongoTemplate mongoTemplate;
 
-    public PersonRepository(MongoTemplate mongoTemplate) {
+    public PeopleRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
@@ -28,19 +28,19 @@ public class PersonRepository {
 
     public List<Person> findBy(PersonFilter personFilter) {
         Criteria criteria = Criteria.where("city.position")
-                .nearSphere(new Point(personFilter.getCoordinates()[0], personFilter.getCoordinates()[1]))
+                .nearSphere(new Point(personFilter.getLongitude(), personFilter.getLatitude()))
                 .minDistance(personFilter.getDistanceInKm().getFrom() / RADIUS)
                 .maxDistance(personFilter.getDistanceInKm().getTo() / 6378.1);
 
         Optional.ofNullable(personFilter.getInContact())
-                .ifPresent(inContact -> criteria.and("contactsExchanged").gt(0));
+                .ifPresent(inContact -> criteria.and("contactsExchanged").gte(0));
 
 
         Optional.ofNullable(personFilter.getHasPhoto())
                 .ifPresent(hasPhoto -> criteria.and("mainPhoto").exists(true));
 
-        Optional.ofNullable(personFilter.getFavorite())
-                .ifPresent(favorite -> criteria.and("favorite").is(favorite));
+        Optional.ofNullable(personFilter.getFavourite())
+                .ifPresent(favourite -> criteria.and("favourite").is(favourite));
 
 
         Optional.ofNullable(personFilter.getCompatibilityScore())
@@ -59,6 +59,6 @@ public class PersonRepository {
 
 
     public void deleteAll() {
-        mongoTemplate.remove(Person.class);
+        mongoTemplate.remove(new Query(), Person.class);
     }
 }

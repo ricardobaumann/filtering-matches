@@ -4,7 +4,7 @@ import com.github.ricardobaumann.filteringmatches.dtos.CityDto;
 import com.github.ricardobaumann.filteringmatches.dtos.PersonDto;
 import com.github.ricardobaumann.filteringmatches.dtos.PersonFilter;
 import com.github.ricardobaumann.filteringmatches.models.Person;
-import com.github.ricardobaumann.filteringmatches.service.PersonService;
+import com.github.ricardobaumann.filteringmatches.service.PeopleService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +18,15 @@ import java.util.stream.Collectors;
 @RestController
 public class PeopleViewController {
 
-    private final PersonService personService;
+    private final PeopleService peopleService;
 
-    public PeopleViewController(PersonService personService) {
-        this.personService = personService;
+    public PeopleViewController(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @PostMapping("/people/report")
     public List<PersonDto> post(@Valid @RequestBody PersonFilter personFilter) {
-        return personService.searchFor(personFilter)
+        return peopleService.searchFor(personFilter)
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class PeopleViewController {
                 person.getMainPhoto(),
                 person.getCompatibilityScore(),
                 person.getContactsExchanged(),
-                person.getFavorite(),
+                person.getFavourite(),
                 person.getReligion()
         );
     }

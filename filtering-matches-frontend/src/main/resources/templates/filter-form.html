@@ -29,11 +29,11 @@
                                id="inContact">
 
                         <label for="favorite" class="col-form-label">Favorite</label>
-                        <input type="checkbox" th:field="*{favorite}" class="form-control"
+                        <input type="checkbox" th:field="*{favourite}" class="form-control"
                                id="favorite">
 
                         <label for="compatibilityScore" class="col-form-label">Compatibility Score</label>
-                        <input type="number" th:field="*{compatibilityScore}" class="form-control"
+                        <input type="number" step="0.01" th:field="*{compatibilityScore}" class="form-control"
                                id="compatibilityScore" placeholder="Compatibility Score">
 
                         <span th:if="${#fields.hasErrors('compatibilityScore')}" th:errors="*{compatibilityScore}"
@@ -83,14 +83,14 @@
 
 
                         <label for="longitude" class="col-form-label">Longitude</label>
-                        <input type="number" th:field="*{longitude}" class="form-control"
+                        <input type="number" step="0.000001" th:field="*{longitude}" class="form-control"
                                id="longitude">
 
                         <span th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"
                               class="text-danger"></span>
 
                         <label for="latitude" class="col-form-label">Longitude</label>
-                        <input type="number" th:field="*{latitude}" class="form-control"
+                        <input type="number" step="0.000001" th:field="*{latitude}" class="form-control"
                                id="latitude">
 
                         <span th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"

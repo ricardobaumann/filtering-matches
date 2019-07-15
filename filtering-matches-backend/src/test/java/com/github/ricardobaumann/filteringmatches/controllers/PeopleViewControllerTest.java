@@ -5,7 +5,7 @@ import com.github.ricardobaumann.filteringmatches.dtos.PersonFilter;
 import com.github.ricardobaumann.filteringmatches.dtos.Range;
 import com.github.ricardobaumann.filteringmatches.models.City;
 import com.github.ricardobaumann.filteringmatches.models.Person;
-import com.github.ricardobaumann.filteringmatches.service.PersonService;
+import com.github.ricardobaumann.filteringmatches.service.PeopleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PeopleViewControllerTest {
 
     @Mock
-    private PersonService personService;
+    private PeopleService peopleService;
 
     @InjectMocks
     private PeopleViewController peopleViewController;
@@ -78,9 +78,9 @@ class PeopleViewControllerTest {
                 new Range(10, 20),
                 new Range(100, 200),
                 new Range(100, 500),
-                new double[]{-1.772232, 51.568535});
+                -1.772232, 51.568535);
 
-        when(personService.searchFor(personFilter))
+        when(peopleService.searchFor(personFilter))
                 .thenReturn(results);
 
 
@@ -98,7 +98,7 @@ class PeopleViewControllerTest {
                 .andExpect(jsonPath("$[0].main_photo", is(person.getMainPhoto())))
                 .andExpect(jsonPath("$[0].compatibility_score", is(person.getCompatibilityScore())))
                 .andExpect(jsonPath("$[0].contacts_exchanged", is(person.getContactsExchanged())))
-                .andExpect(jsonPath("$[0].favorite", is(person.getFavorite())))
+                .andExpect(jsonPath("$[0].favourite", is(person.getFavourite())))
                 .andExpect(jsonPath("$[0].religion", is(person.getReligion())))
         ;
     }
@@ -114,6 +114,7 @@ class PeopleViewControllerTest {
                         new Range(10, 20),
                         new Range(100, 200),
                         null,
+                        null,
                         null),
                 new PersonFilter(
                         true,
@@ -123,7 +124,7 @@ class PeopleViewControllerTest {
                         new Range(10, 20),
                         new Range(100, 200),
                         null,
-                        new double[]{20, 20}),
+                        20.0, 20.0),
                 new PersonFilter(
                         true,
                         true,
@@ -132,7 +133,7 @@ class PeopleViewControllerTest {
                         new Range(10, 20),
                         new Range(100, 200),
                         new Range(20, 30),
-                        null),
+                        null,null),
                 new PersonFilter(
                         true,
                         true,
@@ -141,7 +142,7 @@ class PeopleViewControllerTest {
                         new Range(10, 20),
                         new Range(100, 200),
                         new Range(20, null),
-                        null)
+                        null,null)
         )
                 .map(personFilter -> DynamicTest.dynamicTest("Validate input", () -> {
                     mockMvc.perform(post("/people/report")

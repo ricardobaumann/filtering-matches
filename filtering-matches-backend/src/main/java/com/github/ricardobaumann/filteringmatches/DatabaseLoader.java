@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.ricardobaumann.filteringmatches.dtos.PersonDto;
 import com.github.ricardobaumann.filteringmatches.models.City;
 import com.github.ricardobaumann.filteringmatches.models.Person;
-import com.github.ricardobaumann.filteringmatches.service.PersonService;
+import com.github.ricardobaumann.filteringmatches.service.PeopleService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -25,14 +25,14 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private final Resource databaseSetupResource;
     private final ObjectMapper objectMapper;
-    private final PersonService personService;
+    private final PeopleService peopleService;
 
     public DatabaseLoader(@Value("classpath:/database_setup.json") Resource databaseSetupResource,
                           ObjectMapper objectMapper,
-                          PersonService personService) {
+                          PeopleService peopleService) {
         this.databaseSetupResource = databaseSetupResource;
         this.objectMapper = objectMapper;
-        this.personService = personService;
+        this.peopleService = peopleService;
     }
 
     @Override
@@ -61,9 +61,9 @@ public class DatabaseLoader implements CommandLineRunner {
                         personDto.getMainPhoto(),
                         personDto.getCompatibilityScore(),
                         personDto.getContactsExchanged(),
-                        personDto.getFavorite(),
+                        personDto.getFavourite(),
                         personDto.getReligion()
                 ))
-                .forEach(personService::save);
+                .forEach(peopleService::save);
     }
 }

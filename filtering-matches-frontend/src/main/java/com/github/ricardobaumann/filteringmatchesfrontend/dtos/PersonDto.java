@@ -32,7 +32,7 @@ public class PersonDto {
     @JsonProperty("contacts_exchanged")
     private Integer contactsExchanged;
 
-    private Boolean favorite;
+    private Boolean favourite;
 
     private String religion;
 

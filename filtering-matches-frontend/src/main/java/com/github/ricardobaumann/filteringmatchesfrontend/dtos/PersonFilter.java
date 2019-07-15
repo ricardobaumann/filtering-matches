@@ -19,7 +19,7 @@ public class PersonFilter {
     private Boolean inContact;
 
     @NotNull
-    private Boolean favorite;
+    private Boolean favourite;
 
     @NotNull
     private Double compatibilityScore;

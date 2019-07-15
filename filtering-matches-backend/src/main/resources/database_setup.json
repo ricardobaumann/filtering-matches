@@ -16,22 +16,28 @@
       "favourite": true,
       "religion": "Atheist"
     },
+
+
     {
       "display_name": "Sharon",
-      "age": 47,
+      "age": 18,
       "job_title": "Doctor",
-      "height_in_cm": 161,
+      "height_in_cm": 183,
       "city": {
         "name": "Solihull",
-        "lat": 52.412811,
-        "lon": -1.778197
+        "lat": 51.509865,
+        "lon": -0.118092
       },
       "main_photo": "http://thecatapi.com/api/images/get?format=src&type=gif",
-      "compatibility_score": 0.97,
-      "contacts_exchanged": 0,
-      "favourite": false,
+      "compatibility_score": 22.3,
+      "contacts_exchanged": 10,
+      "favourite": true,
       "religion": "Islam"
     },
+
+
+
+
     {
       "display_name": "Natalia",
       "age": 38,

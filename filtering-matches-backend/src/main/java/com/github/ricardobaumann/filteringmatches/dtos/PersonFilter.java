@@ -16,7 +16,7 @@ public class PersonFilter {
 
     private Boolean inContact;
 
-    private Boolean favorite;
+    private Boolean favourite;
 
     private Double compatibilityScore;
 
@@ -30,6 +30,9 @@ public class PersonFilter {
     private Range distanceInKm;
 
     @NotNull
-    private double[] coordinates;
+    private Double longitude;
+
+    @NotNull
+    private Double latitude;
 
 }
