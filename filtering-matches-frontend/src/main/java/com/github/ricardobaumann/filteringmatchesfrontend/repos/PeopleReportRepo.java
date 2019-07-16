@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "backend", url = "http://localhost:8081")
+@FeignClient(name = "backend", url = "${backend.url}")
 public interface PeopleReportRepo {
 
     @PostMapping("/people/report")

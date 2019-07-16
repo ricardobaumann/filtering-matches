@@ -6,7 +6,6 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.github.ricardobaumann'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '12'
 
 repositories {
@@ -15,6 +14,15 @@ repositories {
 
 ext {
     set('springCloudVersion', "Greenwich.SR1")
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+    }
 }
 
 dependencies {

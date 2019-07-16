@@ -11,6 +11,7 @@ import com.github.ricardobaumann.filteringmatches.service.PeopleService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
@@ -23,20 +24,22 @@ import java.util.stream.StreamSupport;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-    private final Resource databaseSetupResource;
     private final ObjectMapper objectMapper;
     private final PeopleService peopleService;
 
-    public DatabaseLoader(@Value("classpath:/database_setup.json") Resource databaseSetupResource,
-                          ObjectMapper objectMapper,
+    public DatabaseLoader(
+            ObjectMapper objectMapper,
                           PeopleService peopleService) {
-        this.databaseSetupResource = databaseSetupResource;
         this.objectMapper = objectMapper;
         this.peopleService = peopleService;
     }
 
     @Override
     public void run(String... args) throws IOException {
+        if (args.length == 0) {
+            return;
+        }
+        Resource databaseSetupResource = new FileSystemResource(args[0]);
         log.info("Loading file {}", databaseSetupResource.getFile().toString());
         JsonNode content = objectMapper.readTree(databaseSetupResource.getFile());
         ArrayNode matches = (ArrayNode) content.get("matches");

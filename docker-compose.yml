@@ -1,0 +1,11 @@
+backend:
+  build: filtering-matches-backend/
+  ports:
+    - 8081:8081
+
+frontend:
+  build: filtering-matches-frontend/
+  links: 
+    - backend
+  ports: 
+    - 8080:8080
