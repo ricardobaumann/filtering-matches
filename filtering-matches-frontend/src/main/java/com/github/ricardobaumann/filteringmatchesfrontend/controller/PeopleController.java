@@ -22,7 +22,7 @@ public class PeopleController {
         this.peopleReportService = peopleReportService;
     }
 
-    @GetMapping("/index")
+    @GetMapping(value = {"/index", "/"})
     public String index(Model model) {
         model.addAttribute("personFilter", defaultFormData());
         return "filter-form";
